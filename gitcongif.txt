@@ -1,0 +1,14 @@
+git config --global user.name nicoly-athayde
+git config --global user.email nicolyathayde4@gmail.com
+
+
+--Criar o arquivo gittgnore
+dotnet new gitignore
+
+
+--Criar o projeto API
+dotnet new webapi -o GStore.API --use-controllers
+
+
+--Instalações
+--Extensão Nuget Gallery
