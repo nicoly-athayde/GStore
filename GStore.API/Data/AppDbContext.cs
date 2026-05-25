@@ -1,3 +1,4 @@
+using System.Runtime.Intrinsics.X86;
 using GStore.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
@@ -12,14 +13,14 @@ public class AppDbContext : IdentityDbContext<Usuario>
     }
 
     public DbSet<Categoria> Categorias { get; set; }
-    public DbSet<Produto> Pordutos { get; set; }
+    public DbSet<Produto> Produtos { get; set; }
     public DbSet<Usuario> Usuarios { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
 
-        #region Confuguração do Identity
+        #region Configuração do Identity
         builder.Entity<Usuario>().ToTable("usuarios");
         builder.Entity<IdentityRole>().ToTable("perfis");
         builder.Entity<IdentityUserRole<string>>().ToTable("usuario_perfis");
@@ -29,4 +30,5 @@ public class AppDbContext : IdentityDbContext<Usuario>
         builder.Entity<IdentityRoleClaim<string>>().ToTable("perfil_regras");
         #endregion
     }
+
 }

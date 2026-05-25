@@ -1,3 +1,4 @@
+using GStore.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,13 +11,12 @@ public class SeedUsuario
         #region Perfil
         List<IdentityRole> perfis = [
             new() {
-                Id= "b24b85b9-7e2a-4584-931a-10c48c2762ca",
+                Id = "0e854410-eea9-4a73-a94c-290503d8f2c1",
                 Name = "Administrador",
                 NormalizedName = "ADMINISTRADOR"
             },
-
             new() {
-                Id= "3192a642-68e1-477d-9927-8a9ecbf65342",
+                Id = "e1fc6baa-ca55-4bb4-993c-fa5cd578c6aa",
                 Name = "Cliente",
                 NormalizedName = "CLIENTE"
             },
@@ -25,9 +25,36 @@ public class SeedUsuario
         #endregion
 
         #region Usuários
+        List<Usuario> usuarios = [
+            new Usuario() {
+                Id = "e1fc6baa-ca55-4bb4-993c-fa5cd578c6aa",
+                Email = "admin@gstore.com",
+                NormalizedEmail = "ADMIN@GSTORE.COM",
+                UserName = "admin@gstore.com",
+                NormalizedUserName = "ADMIN@GSTORE.COM",
+                LockoutEnabled = true,
+                EmailConfirmed = true,
+                Nome = "Administrador",
+                DataNascimento = DateTime.Parse("05/08/1981"),
+                Foto = "/img/usuarios/e1fc6baa-ca55-4bb4-993c-fa5cd578c6aa.png"
+            },
+        ];
+        foreach (var usuario in usuarios)
+        {
+            PasswordHasher<Usuario> passwordHasher = new();
+            usuario.PasswordHash = passwordHasher.HashPassword(usuario, "123456");
+        }
+        builder.Entity<Usuario>().HasData(usuarios);
         #endregion
 
         #region Usuário Perfil
+        List<IdentityUserRole<string>> userRoles = [
+            new () {
+                UserId = usuarios[0].Id,
+                RoleId = perfis[0].Id
+            }
+        ];
+        builder.Entity<IdentityUserRole<string>>().HasData(userRoles);
         #endregion
     }
 }
